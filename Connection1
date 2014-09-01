@@ -1,0 +1,39 @@
+Private Sub Button8_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles KryptonButton8.Click
+        'NEW CUSTOMER
+        Try
+            Dim MyConnection As System.Data.OleDb.OleDbConnection
+            Dim myCommand As New System.Data.OleDb.OleDbCommand
+            Dim sql As String
+
+            Dim v4 As Date
+            v4 = Date.Today
+
+            Dim v2 As String
+            v2 = priceTotal
+
+            Dim v1 As String = DateTime.Now.ToString("ddMMyyyy,Hmmss")
+
+            Dim v3 As String
+            v3 = tipo
+
+            MyConnection = New System.Data.OleDb.OleDbConnection _
+               ("provider=Microsoft.Jet.OLEDB.4.0; Data Source=" + _
+                    "'C:\***.xls';Extended Properties=Excel 8.0;")
+
+            MyConnection.Open()
+            myCommand.Connection = MyConnection
+            sql = "Insert into [Sheet1$] (invoiceNumber,amount,type,Date) values(' " + v1 + " ',' " + v2 + " ',' " + v3 + " ','" + v4 + " ')"
+            myCommand.CommandText = sql
+            myCommand.ExecuteNonQuery()
+            MyConnection.Close()
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+        End Try
+
+        TextBox2.Clear()
+        ListBox1.Items.Clear()
+        pvpTotal = 0
+        numProductos = 0
+        canvi = 0
+        tipo = ""
+    End Sub
